@@ -6,57 +6,92 @@
 <title>Jacob Quisumbing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:     #090909;
-  --text:   #c4bfa6;
-  --dim:    #464434;
-  --ghost:  #201f16;
-  --accent: #4a7a4e;
-  --hi:     #d2ccb4;
-  --mid:    #8a856e;
-  --red:    rgba(184,48,48,0.72);
-  --grn:    rgba(48,162,78,0.52);
-  --border: rgba(74,122,78,0.11);
-  --mono:   'DM Mono', monospace;
-  --cond:   'Barlow Condensed', sans-serif;
+  --bg:       #090909;
+  --text:     #c4bfa6;
+  --dim:      #464434;
+  --ghost:    #201f16;
+  --accent:   #4a7a4e;
+  --hi:       #d2ccb4;
+  --mid:      #7a7560;
+  --warm:     #c47a3a;
+  --warm-dim: rgba(196,122,58,0.18);
+  --red:      rgba(184,48,48,0.72);
+  --grn:      rgba(48,162,78,0.52);
+  --border:   rgba(74,122,78,0.11);
+  --mono:     'DM Mono', monospace;
+  --cond:     'Barlow Condensed', sans-serif;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html { font-size:16px; scroll-behavior:smooth; }
 body { background:var(--bg); color:var(--text); font-family:var(--mono); line-height:1.7; min-height:100vh; overflow-x:hidden; cursor:none; }
 
+/* ── ASCII BG ── */
 #ascii-bg {
   position:fixed; inset:0; z-index:0; pointer-events:none;
   font-family:'DM Mono','Courier New',monospace;
   font-size:9px; line-height:13px;
-  color:rgba(74,122,78,0.11);
+  color:rgba(74,122,78,0.1);
   white-space:pre; overflow:hidden; user-select:none;
-  opacity:0; transition:opacity 1.8s ease 0.2s;
+  opacity:0; transition:opacity 2s ease 0.1s;
 }
 #ascii-bg.loaded { opacity:1; }
-#scanlines { position:fixed; inset:0; z-index:1; pointer-events:none; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px); }
-#cur { position:fixed; z-index:9999; pointer-events:none; width:4px; height:4px; border-radius:50%; background:var(--accent); transform:translate(-50%,-50%); transition:width .12s,height .12s; mix-blend-mode:screen; }
-#cur.on { width:22px; height:22px; background:rgba(74,122,78,0.14); border:.5px solid var(--accent); }
 
-#wrap { position:relative; z-index:2; max-width:580px; margin:0 auto; padding:80px 28px 100px; }
+#scanlines { position:fixed; inset:0; z-index:1; pointer-events:none; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.055) 3px,rgba(0,0,0,0.055) 4px); }
 
-/* header */
-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:88px; }
-#name { font-family:var(--cond); font-size:22px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--hi); margin-bottom:10px; cursor:default; opacity:0; }
+/* ── CURSOR ── */
+#cur { position:fixed; z-index:9999; pointer-events:none; width:4px; height:4px; border-radius:50%; background:var(--accent); transform:translate(-50%,-50%); transition:width .13s,height .13s; mix-blend-mode:screen; }
+#cur.on { width:22px; height:22px; background:rgba(74,122,78,0.13); border:.5px solid var(--accent); }
+
+/* ── LAYOUT ── */
+#wrap { position:relative; z-index:2; max-width:600px; margin:0 auto; padding:80px 28px 100px; }
+
+/* ── HEADER ── */
+header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:80px; }
+
+#name {
+  font-family:var(--cond); font-size:22px; font-weight:800;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--hi); margin-bottom:10px;
+  cursor:default; opacity:0;
+}
+
 .meta { font-size:9px; letter-spacing:.06em; color:var(--dim); line-height:2; opacity:0; transition:opacity .3s ease; }
-.blurb { margin-top:14px; }
-.blurb-line { font-size:10px; color:var(--mid); line-height:1.8; letter-spacing:.02em; opacity:0; min-height:1.2em; }
-nav { opacity:0; transition:opacity .3s ease; }
-nav a { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; }
+
+/* BLURB — breaks the grid, large Barlow Condensed italic */
+.blurb {
+  margin-top:22px;
+  margin-left:-2px;
+  max-width:520px;
+}
+.blurb-line {
+  font-family:var(--cond);
+  font-style:italic;
+  font-weight:700;
+  font-size:clamp(15px, 2.4vw, 22px);
+  line-height:1.3;
+  letter-spacing:.01em;
+  color:var(--hi);
+  opacity:0;
+  display:block;
+  min-height:1.3em;
+  white-space:nowrap;
+}
+.blurb-line:first-child { color:var(--text); }
+.blurb-line:last-child  { color:var(--mid); }
+
+nav { opacity:0; transition:opacity .3s ease; padding-top:2px; }
+nav a { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; white-space:nowrap; }
 nav a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:.5px; background:var(--accent); transition:width .22s; }
 nav a:hover { color:var(--text); }
 nav a:hover::after { width:100%; }
 
-/* blocks */
-.block { margin-bottom:56px; }
-.blabel { font-size:8px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; display:block; opacity:0; min-height:1em; }
+/* ── BLOCKS ── */
+.block { margin-bottom:60px; }
+.blabel { font-size:8px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; opacity:0; min-height:1em; }
 
 /* assignment */
 .asgn-line { font-size:17px; font-style:italic; color:var(--hi); line-height:1.45; position:relative; display:block; opacity:0; }
@@ -68,24 +103,56 @@ nav a:hover::after { width:100%; }
 .caret { display:inline-block; width:2px; height:.75em; background:var(--accent); vertical-align:middle; margin-left:4px; animation:blink 1.1s step-end infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* blnk */
-.blnk-link { font-family:var(--cond); font-size:20px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--hi); text-decoration:none; display:inline-flex; align-items:center; gap:8px; position:relative; transition:color .2s; }
+/* building */
+.build-item { margin-bottom:24px; }
+.build-item:last-child { margin-bottom:0; }
+
+.blnk-link {
+  font-family:var(--cond); font-size:19px; font-weight:800;
+  letter-spacing:.13em; text-transform:uppercase;
+  color:var(--hi); text-decoration:none;
+  display:inline-flex; align-items:center; gap:7px;
+  position:relative; transition:color .2s;
+}
 .blnk-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:.5px; background:var(--accent); transition:width .25s; }
 .blnk-link:hover { color:var(--text); }
 .blnk-link:hover::after { width:100%; }
-.blnk-text { opacity:0; }
-.blnk-arrow { font-size:14px; font-family:var(--mono); font-weight:400; color:var(--accent); opacity:0; transition:transform .2s,color .2s,opacity .3s; }
-.blnk-link:hover .blnk-arrow { transform:translate(2px,-2px); color:var(--text); }
-.blnk-sub { font-size:11px; font-style:italic; color:var(--dim); margin-top:10px; opacity:0; min-height:1em; }
+.blnk-text,.sift-text { opacity:0; }
+.blnk-arrow,.sift-arrow { font-size:13px; font-family:var(--mono); font-weight:400; color:var(--accent); opacity:0; transition:transform .2s,color .2s; }
+.blnk-link:hover .blnk-arrow,
+.blnk-link:hover .sift-arrow { transform:translate(2px,-2px); color:var(--text); }
 
-/* planning */
+.build-sub { font-size:11px; font-style:italic; color:var(--dim); margin-top:8px; opacity:0; min-height:1em; }
+
+/* sift — no link yet */
+.sift-name {
+  font-family:var(--cond); font-size:19px; font-weight:800;
+  letter-spacing:.13em; text-transform:uppercase;
+  color:var(--dim); display:block; opacity:0;
+}
+
+/* planning — warm accent */
 .planning-rule { border:none; border-top:.5px solid var(--ghost); margin-bottom:40px; }
-.planning-label { font-size:8px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; display:block; opacity:0; min-height:1em; }
+.planning-label {
+  font-size:8px; letter-spacing:.26em; text-transform:uppercase;
+  color:var(--warm); margin-bottom:22px; display:block;
+  opacity:0; min-height:1em;
+}
 .planning-list { list-style:none; }
-.planning-list li { font-size:12px; color:var(--dim); padding:9px 0; border-bottom:.5px solid var(--ghost); line-height:1.75; }
+.planning-list li {
+  padding:10px 0;
+  border-bottom:.5px solid rgba(196,122,58,0.1);
+  line-height:1.75;
+}
 .planning-list li:last-child { border-bottom:none; }
-.item-label { font-style:normal; color:var(--hi); font-size:11px; letter-spacing:.04em; display:block; margin-bottom:2px; opacity:0; min-height:1em; }
-.item-body { font-style:italic; display:block; opacity:0; min-height:1em; }
+
+.item-label {
+  font-family:var(--cond); font-weight:700; font-size:14px;
+  letter-spacing:.06em; text-transform:uppercase;
+  color:var(--warm); display:block; margin-bottom:3px;
+  opacity:0; min-height:1em;
+}
+.item-body { font-size:12px; font-style:italic; color:var(--dim); display:block; opacity:0; min-height:1em; }
 
 /* contact */
 .clinks { display:flex; flex-wrap:wrap; gap:24px; }
@@ -100,14 +167,13 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
 #sc { cursor:default; transition:color .2s; }
 #sc:hover { color:var(--dim); }
 
-/* reveal — instant show, children scramble */
-.reveal { opacity:0; transition:opacity 0.01s; }
+.reveal { opacity:0; }
 .reveal.in { opacity:1; }
 
 ::-webkit-scrollbar { width:2px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); }
-@media(max-width:500px) { header{flex-direction:column;gap:16px} #wrap{padding:56px 20px 80px} }
+@media(max-width:500px) { header{flex-direction:column;gap:20px} #wrap{padding:56px 20px 80px} .blurb-line{font-size:20px} }
 </style>
 </head>
 <body>
@@ -119,20 +185,21 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
 <div id="wrap">
 
   <header>
-    <div>
+    <div style="flex:1">
       <div id="name">Jacob Quisumbing</div>
       <div class="meta" id="meta-el">
         37.8716° N &nbsp;122.2727° W &nbsp;// &nbsp;Berkeley, CA<br>
         <span id="ts"></span>
       </div>
       <div class="blurb">
-        <div class="blurb-line" id="blurb-1">I like to work on problems that look solved but aren't.</div>
-        <div class="blurb-line" id="blurb-2">I build things in the gap between perception and reality.</div>
+        <span class="blurb-line" id="blurb-1">I like to work on problems that look solved but aren't.</span>
+        <span class="blurb-line" id="blurb-2">I build things in the gap between perception and reality.</span>
       </div>
     </div>
     <nav id="nav-el"><a href="#contact">Contact</a></nav>
   </header>
 
+  <!-- CURRENTLY -->
   <div class="block">
     <span class="blabel" id="lbl-currently">Currently</span>
     <div class="asgn-line" id="asgn-el"
@@ -141,21 +208,31 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
     </div>
   </div>
 
+  <!-- BUILDING -->
   <div class="block reveal" data-section="building">
     <span class="blabel">Building</span>
-    <a href="https://blnk.work" target="_blank" class="blnk-link">
-      <span class="blnk-text">BLNK</span><span class="blnk-arrow">↗</span>
-    </a>
-    <div class="blnk-sub">does it 'work' or does it work?</div>
+
+    <div class="build-item">
+      <a href="https://blnk.work" target="_blank" class="blnk-link">
+        <span class="blnk-text">BLNK</span><span class="blnk-arrow">↗</span>
+      </a>
+      <div class="build-sub" id="blnk-sub">does it 'work' or does it work?</div>
+    </div>
+
+    <div class="build-item">
+      <span class="sift-name" id="sift-name">Sift</span>
+      <div class="build-sub" id="sift-sub">you saved it. now what?</div>
+    </div>
   </div>
 
+  <!-- PLANNING -->
   <div class="block reveal" data-section="planning">
     <hr class="planning-rule">
     <span class="planning-label">Planning...</span>
     <ul class="planning-list">
       <li>
         <span class="item-label">Everest base camp</span>
-        <span class="item-body">if you know a good sherpa or want to help fund my expedition, let me know.</span>
+        <span class="item-body">if you know a Sherpa or want to help fund my expedition, let me know.</span>
       </li>
       <li>
         <span class="item-label">Ironman Worlds Kona 2028</span>
@@ -168,6 +245,7 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
     </ul>
   </div>
 
+  <!-- CONTACT -->
   <div class="block reveal" data-section="contact" id="contact">
     <span class="blabel">Contact</span>
     <div class="contact-links">
@@ -196,7 +274,7 @@ function topoChar(e){const iv=0.095,mod=e%iv,th=0.013;if(mod<th||mod>iv-th){if(e
 const bg=document.getElementById('ascii-bg');
 const CW=5.45,CH=13;
 let ox=0,oy=0,pmx=0,pmy=0;
-const LOAD_START=performance.now(),LOAD_DUR=2400;
+const LOAD_START=performance.now(),LOAD_DUR=2600;
 const NOISE='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*░▒▓▄▀';
 
 function renderTerrain(){
@@ -222,27 +300,34 @@ function renderTerrain(){
 }
 renderTerrain();
 requestAnimationFrame(()=>bg.classList.add('loaded'));
-let tt=setInterval(renderTerrain,90);
+let tt=setInterval(renderTerrain,85);
 setTimeout(()=>{clearInterval(tt);setInterval(renderTerrain,320);},LOAD_DUR+400);
-document.addEventListener('mousemove',e=>{pmx=(e.clientX/window.innerWidth-.5)*0.4;pmy=(e.clientY/window.innerHeight-.5)*0.25;});
+document.addEventListener('mousemove',e=>{pmx=(e.clientX/window.innerWidth-.5)*0.38;pmy=(e.clientY/window.innerHeight-.5)*0.22;});
 
 /* ══ SCRAMBLE ENGINE ═════════════════════════════════════ */
 const POOLS=['ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789','ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#%0123456789','ABCDEFGHIJKLMNOPQRSTUVWXYZ0101001101001011','ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789▓▒░'];
 const CHARS=POOLS[Math.floor(Math.random()*POOLS.length)];
 function rc(){return CHARS[Math.floor(Math.random()*CHARS.length)];}
-const SAFE=" &/-:.,@+—°'\"";
+const SAFE=" &/-:.,@+—°'\".!?";
 
+/* Tension scramble: longer noise burst before resolving */
 function scramblePlain(el,final,spd,cb){
   el.style.opacity='1';
-  const s=Math.max(14,spd+(Math.random()*8|0)-4);
-  let i=-3;
+  const s=Math.max(12,spd+(Math.random()*8|0)-4);
+  // Start at -8 for longer pure noise burst (tension)
+  let i=-8;
   const iv=setInterval(()=>{
     el.textContent=final.split('').map((c,idx)=>{
       if(SAFE.includes(c))return c;
       return idx<Math.max(0,i)?final[idx]:rc();
     }).join('');
-    i+=1.8;
-    if(i>final.length){el.textContent=final;clearInterval(iv);if(cb)setTimeout(cb,30+(Math.random()*30|0));}
+    // Slow reveal: +1.2 per tick instead of +1.8
+    i+=1.2;
+    if(i>final.length){
+      el.textContent=final;
+      clearInterval(iv);
+      if(cb)setTimeout(cb,20+(Math.random()*25|0));
+    }
   },s);
 }
 
@@ -256,92 +341,89 @@ function hoverScramble(el,final){
   });
 }
 
-/* ══ SECTION SCRAMBLE SEQUENCES ══════════════════════════ */
-function scrambleBuilding(section){
-  const lbl=section.querySelector('.blabel');
-  const blnkText=section.querySelector('.blnk-text');
-  const blnkArrow=section.querySelector('.blnk-arrow');
-  const blnkSub=section.querySelector('.blnk-sub');
-  scramblePlain(lbl,'Building',30,()=>{
-    scramblePlain(blnkText,'BLNK',26,()=>{
+/* ══ SECTION SEQUENCES ═══════════════════════════════════ */
+function scrambleBuilding(sec){
+  const lbl=sec.querySelector('.blabel');
+  const blnkText=sec.querySelector('.blnk-text');
+  const blnkArrow=sec.querySelector('.blnk-arrow');
+  const blnkSub=sec.querySelector('#blnk-sub');
+  const siftName=sec.querySelector('#sift-name');
+  const siftSub=sec.querySelector('#sift-sub');
+  scramblePlain(lbl,'Building',28,()=>{
+    scramblePlain(blnkText,'BLNK',22,()=>{
       blnkArrow.style.opacity='1';
-      setTimeout(()=>scramblePlain(blnkSub,"does it 'work' or does it work?",24,null),60);
+      scramblePlain(blnkSub,"does it 'work' or does it work?",20,()=>{
+        setTimeout(()=>{
+          scramblePlain(siftName,'Sift',24,()=>{
+            scramblePlain(siftSub,'you saved it. now what?',20,null);
+          });
+        },120);
+      });
     });
   });
 }
 
-function scramblePlanning(section){
-  const lbl=section.querySelector('.planning-label');
-  const items=section.querySelectorAll('.planning-list li');
-  scramblePlain(lbl,'Planning...',30,()=>{
-    let idx=0;
+function scramblePlanning(sec){
+  const lbl=sec.querySelector('.planning-label');
+  const items=sec.querySelectorAll('.planning-list li');
+  scramblePlain(lbl,'Planning...',28,()=>{
     function next(i){
       if(i>=items.length)return;
-      const itemLbl=items[i].querySelector('.item-label');
-      const itemBody=items[i].querySelector('.item-body');
-      const lblText=itemLbl.textContent.trim();
-      const bodyText=itemBody.textContent.trim();
-      itemLbl.textContent=''; itemBody.textContent='';
-      scramblePlain(itemLbl,lblText,26,()=>{
-        scramblePlain(itemBody,bodyText,22,()=>next(i+1));
+      const iLbl=items[i].querySelector('.item-label');
+      const iBody=items[i].querySelector('.item-body');
+      const lt=iLbl.textContent.trim(), bt=iBody.textContent.trim();
+      iLbl.textContent=''; iBody.textContent='';
+      scramblePlain(iLbl,lt,24,()=>{
+        scramblePlain(iBody,bt,20,()=>setTimeout(()=>next(i+1),60));
       });
     }
     next(0);
   });
 }
 
-function scrambleContact(section){
-  const lbl=section.querySelector('.blabel');
-  const links=section.querySelector('.contact-links');
-  scramblePlain(lbl,'Contact',30,()=>{
-    links.style.opacity='1';
-  });
+function scrambleContact(sec){
+  const lbl=sec.querySelector('.blabel');
+  const links=sec.querySelector('.contact-links');
+  scramblePlain(lbl,'Contact',28,()=>{ links.style.opacity='1'; });
 }
 
 /* ══ LOAD SEQUENCE ═══════════════════════════════════════ */
-const nameEl=document.getElementById('name');
-const metaEl=document.getElementById('meta-el');
-const blurb1=document.getElementById('blurb-1');
-const blurb2=document.getElementById('blurb-2');
-const navEl=document.getElementById('nav-el');
-const lblCurrent=document.getElementById('lbl-currently');
-const asgnEl=document.getElementById('asgn-el');
-const asgnText='Strategy & Ops @ Defense Innovation Unit';
+const nameEl    = document.getElementById('name');
+const metaEl    = document.getElementById('meta-el');
+const blurb1    = document.getElementById('blurb-1');
+const blurb2    = document.getElementById('blurb-2');
+const navEl     = document.getElementById('nav-el');
+const lblCur    = document.getElementById('lbl-currently');
+const asgnEl    = document.getElementById('asgn-el');
+const asgnText  = 'Strategy & Ops @ Defense Innovation Unit';
 
 setTimeout(()=>{
-  // 1. Name
-  scramblePlain(nameEl,'Jacob Quisumbing',30,()=>{
-    // 2. Meta
+  scramblePlain(nameEl,'Jacob Quisumbing',28,()=>{
     metaEl.style.opacity='1';
     setTimeout(()=>{
-      // 3. Blurb line 1
-      scramblePlain(blurb1,"I like to work on problems that look solved but aren't.",20,()=>{
-        // 4. Blurb line 2
-        scramblePlain(blurb2,'I build things in the gap between perception and reality.',20,()=>{
-          // 5. Nav
+      scramblePlain(blurb1,"I like to work on problems that look solved but aren't.",18,()=>{
+        scramblePlain(blurb2,'I build things in the gap between perception and reality.',18,()=>{
           navEl.style.opacity='1';
           setTimeout(()=>{
-            // 6. Currently label
-            scramblePlain(lblCurrent,'Currently',26,()=>{
-              // 7. Assignment line
+            scramblePlain(lblCur,'Currently',24,()=>{
               asgnEl.style.opacity='1';
               const tn=asgnEl.childNodes[0];
-              let i=-4;const s=22+(Math.random()*6|0);
+              let i=-8; const s=20+(Math.random()*6|0);
               const iv=setInterval(()=>{
                 tn.textContent=asgnText.split('').map((c,idx)=>{
                   if(SAFE.includes(c))return c;
                   return idx<Math.max(0,i)?asgnText[idx]:rc();
                 }).join('');
-                i+=1.4;
+                i+=1.2;
                 if(i>asgnText.length){tn.textContent=asgnText;clearInterval(iv);}
               },s);
             });
-          },80);
+          },60);
         });
       });
-    },100);
+    },80);
   });
-},60+(Math.random()*80|0));
+},50+(Math.random()*70|0));
 
 hoverScramble(nameEl,'Jacob Quisumbing');
 
@@ -370,16 +452,14 @@ const obs=new IntersectionObserver(entries=>{
     if(e.isIntersecting){
       e.target.classList.add('in');
       const s=e.target.dataset.section;
-      if(s==='building')scrambleBuilding(e.target);
+      if(s==='building')     scrambleBuilding(e.target);
       else if(s==='planning')scramblePlanning(e.target);
-      else if(s==='contact')scrambleContact(e.target);
-      else if(s==='footer'){
-        e.target.style.opacity='1';
-      }
+      else if(s==='contact') scrambleContact(e.target);
+      else if(s==='footer')  e.target.style.opacity='1';
       obs.unobserve(e.target);
     }
   });
-},{threshold:.15});
+},{threshold:.12});
 document.querySelectorAll('.reveal,[data-section="footer"]').forEach(el=>obs.observe(el));
 
 /* ══ FOOTER SCRAMBLE ═════════════════════════════════════ */
