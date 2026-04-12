@@ -52,51 +52,52 @@ body { background:var(--bg); color:var(--text); font-family:var(--mono); line-he
 #wrap { position:relative; z-index:2; max-width:600px; margin:0 auto; padding:80px 28px 100px; }
 
 /* ── HEADER ── */
-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:80px; }
+header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:88px; }
 
+/* ── NAME — Barlow 800, top of display scale ── */
 #name {
-  font-family:var(--cond); font-size:22px; font-weight:800;
+  font-family:var(--cond); font-size:32px; font-weight:800;
   letter-spacing:.14em; text-transform:uppercase;
-  color:var(--hi); margin-bottom:10px;
+  color:var(--hi); margin-bottom:12px;
   cursor:default; opacity:0;
 }
 
-.meta { font-size:9px; letter-spacing:.06em; color:var(--dim); line-height:2; opacity:0; transition:opacity .3s ease; }
+/* ── META — DM Mono utility, smallest readable ── */
+.meta { font-size:11px; letter-spacing:.06em; color:var(--dim); line-height:2.1; opacity:0; transition:opacity .3s ease; }
 
-/* BLURB — breaks the grid, large Barlow Condensed italic */
-.blurb {
-  margin-top:22px;
-  margin-left:-2px;
-  max-width:520px;
-}
+/* ── BLURB — Barlow italic, second display level ── */
+.blurb { margin-top:24px; margin-left:-2px; max-width:580px; }
 .blurb-line {
-  font-family:var(--cond);
-  font-style:italic;
-  font-weight:700;
-  font-size:clamp(15px, 2.4vw, 22px);
-  line-height:1.3;
-  letter-spacing:.01em;
-  color:var(--hi);
-  opacity:0;
-  display:block;
-  min-height:1.3em;
-  white-space:nowrap;
+  font-family:var(--cond); font-style:italic; font-weight:700;
+  font-size:clamp(20px, 3vw, 28px);
+  line-height:1.3; letter-spacing:.01em;
+  color:var(--hi); opacity:0; display:block;
+  min-height:1.3em; white-space:nowrap;
 }
 .blurb-line:first-child { color:var(--text); }
 .blurb-line:last-child  { color:var(--mid); }
 
-nav { opacity:0; transition:opacity .3s ease; padding-top:2px; }
-nav a { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; white-space:nowrap; }
+/* ── NAV — DM Mono utility ── */
+nav { opacity:0; transition:opacity .3s ease; padding-top:4px; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+nav a { font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; white-space:nowrap; }
 nav a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:.5px; background:var(--accent); transition:width .22s; }
 nav a:hover { color:var(--text); }
 nav a:hover::after { width:100%; }
 
 /* ── BLOCKS ── */
-.block { margin-bottom:60px; }
-.blabel { font-size:8px; letter-spacing:.26em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; opacity:0; min-height:1em; }
+.block { margin-bottom:72px; }
 
-/* assignment */
-.asgn-line { font-size:17px; font-style:italic; color:var(--hi); line-height:1.45; position:relative; display:block; opacity:0; }
+/* ── SECTION HEADERS — DM Mono, document substrate layer ── */
+/* Monospaced, classified-document feel. Tracking does the structural work. */
+.blabel {
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  letter-spacing:.32em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:20px;
+  display:block; opacity:0; min-height:1em;
+}
+
+/* ── ASSIGNMENT — DM Mono, primary content ── */
+.asgn-line { font-size:18px; font-style:italic; color:var(--hi); line-height:1.5; position:relative; display:block; opacity:0; }
 .asgn-line::before,.asgn-line::after { content:attr(data-text); position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; pointer-events:none; font-size:inherit; font-style:inherit; line-height:inherit; }
 .asgn-line::before { color:var(--red); animation:glR 9s steps(1) 4s infinite; }
 .asgn-line::after  { color:var(--grn); animation:glG 9s steps(1) 4.08s infinite; }
@@ -105,15 +106,15 @@ nav a:hover::after { width:100%; }
 .caret { display:inline-block; width:2px; height:.75em; background:var(--accent); vertical-align:middle; margin-left:4px; animation:blink 1.1s step-end infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* building */
-.build-item { margin-bottom:24px; }
+/* ── BUILDING — Barlow 800 project names, DM Mono subs ── */
+.build-item { margin-bottom:28px; }
 .build-item:last-child { margin-bottom:0; }
 
 .blnk-link {
-  font-family:var(--cond); font-size:19px; font-weight:800;
-  letter-spacing:.13em; text-transform:uppercase;
+  font-family:var(--cond); font-size:26px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
   color:var(--hi); text-decoration:none;
-  display:inline-flex; align-items:center; gap:7px;
+  display:inline-flex; align-items:center; gap:8px;
   position:relative; transition:color .2s;
 }
 .blnk-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:.5px; background:var(--accent); transition:width .25s; }
@@ -124,48 +125,52 @@ nav a:hover::after { width:100%; }
 .blnk-link:hover .blnk-arrow,
 .blnk-link:hover .sift-arrow { transform:translate(2px,-2px); color:var(--text); }
 
-.build-sub { font-size:11px; font-style:italic; color:var(--dim); margin-top:8px; opacity:0; min-height:1em; }
+/* DM Mono 13px — secondary content, clearly below names */
+.build-sub { font-size:13px; font-style:italic; color:var(--dim); margin-top:6px; opacity:0; min-height:1em; }
 
 /* sift — no link yet */
 .sift-name {
-  font-family:var(--cond); font-size:19px; font-weight:800;
-  letter-spacing:.13em; text-transform:uppercase;
+  font-family:var(--cond); font-size:26px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
   color:var(--dim); display:block; opacity:0;
 }
 
-/* planning — warm accent */
+/* ── PLANNING — DM Mono label (substrate), Barlow items (signal), warm color ── */
 .planning-rule { border:none; border-top:.5px solid var(--ghost); margin-bottom:40px; }
 .planning-label {
-  font-size:8px; letter-spacing:.26em; text-transform:uppercase;
-  color:var(--warm); margin-bottom:22px; display:block;
-  opacity:0; min-height:1em;
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  letter-spacing:.32em; text-transform:uppercase;
+  color:var(--warm); margin-bottom:24px;
+  display:block; opacity:0; min-height:1em;
 }
 .planning-list { list-style:none; }
 .planning-list li {
-  padding:10px 0;
+  padding:14px 0;
   border-bottom:.5px solid rgba(196,122,58,0.1);
-  line-height:1.75;
+  line-height:1.7;
 }
 .planning-list li:last-child { border-bottom:none; }
 
+/* Barlow 800 item titles — clear level above body */
 .item-label {
-  font-family:var(--cond); font-weight:700; font-size:14px;
-  letter-spacing:.06em; text-transform:uppercase;
-  color:var(--warm); display:block; margin-bottom:3px;
+  font-family:var(--cond); font-weight:800; font-size:20px;
+  letter-spacing:.07em; text-transform:uppercase;
+  color:var(--warm); display:block; margin-bottom:4px;
   opacity:0; min-height:1em;
 }
-.item-body { font-size:12px; font-style:italic; color:var(--dim); display:block; opacity:0; min-height:1em; }
+/* DM Mono 13px — clearly subordinate */
+.item-body { font-size:13px; font-style:italic; color:var(--dim); display:block; opacity:0; min-height:1em; }
 
-/* contact */
+/* ── CONTACT — DM Mono utility ── */
 .clinks { display:flex; flex-wrap:wrap; gap:24px; }
-.clinks a { font-size:10px; letter-spacing:.1em; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; }
+.clinks a { font-size:12px; letter-spacing:.1em; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; }
 .clinks a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:.5px; background:var(--accent); transition:width .22s; }
 .clinks a:hover { color:var(--text); }
 .clinks a:hover::after { width:100%; }
 .contact-links { opacity:0; transition:opacity .4s ease; }
 
-/* footer */
-footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border); display:flex; justify-content:space-between; font-size:8px; letter-spacing:.1em; color:var(--ghost); opacity:0; transition:opacity .4s ease; }
+/* ── FOOTER — DM Mono minimum ── */
+footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border); display:flex; justify-content:space-between; font-size:10px; letter-spacing:.1em; color:var(--ghost); opacity:0; transition:opacity .4s ease; }
 #sc { cursor:default; transition:color .2s; }
 #sc:hover { color:var(--dim); }
 
@@ -175,7 +180,7 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
 ::-webkit-scrollbar { width:2px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); }
-@media(max-width:500px) { header{flex-direction:column;gap:20px} #wrap{padding:56px 20px 80px} .blurb-line{font-size:20px} }
+@media(max-width:500px) { header{flex-direction:column;gap:20px} #wrap{padding:56px 20px 80px} .blurb-line{font-size:22px;white-space:normal} }
 </style>
 </head>
 <body>
@@ -194,11 +199,11 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
         <span id="ts"></span>
       </div>
       <div class="blurb">
-        <span class="blurb-line" id="blurb-1">I like to work on problems that look solved but aren't.</span>
-        <span class="blurb-line" id="blurb-2">I build things in the gap between perception and reality.</span>
+        <span class="blurb-line" id="blurb-1">Most problems look solved.</span>
+        <span class="blurb-line" id="blurb-2">I build in the gap.</span>
       </div>
     </div>
-    <nav id="nav-el"><a href="#contact">Contact</a></nav>
+    <nav id="nav-el"><a href="epistemology.html">Epistemology</a><a href="#contact">Contact</a></nav>
   </header>
 
   <!-- CURRENTLY -->
@@ -400,14 +405,22 @@ const asgnEl    = document.getElementById('asgn-el');
 const asgnText  = 'Strategy & Ops @ Defense Innovation Unit';
 
 setTimeout(()=>{
+  // 1. Identity anchor
   scramblePlain(nameEl,'Jacob Quisumbing',28,()=>{
+    // 2. Header chrome — meta and nav together, same layer
     metaEl.style.opacity='1';
+    navEl.style.opacity='1';
+    // 3. Pause — let header settle before thesis
     setTimeout(()=>{
-      scramblePlain(blurb1,"I like to work on problems that look solved but aren't.",18,()=>{
-        scramblePlain(blurb2,'I build things in the gap between perception and reality.',18,()=>{
-          navEl.style.opacity='1';
+      // 4. Thesis — line 1
+      scramblePlain(blurb1,'Most problems look solved.',18,()=>{
+        // 5. Thesis — line 2
+        scramblePlain(blurb2,'I build in the gap.',18,()=>{
+          // 6. Pause — thesis clear, section begins
           setTimeout(()=>{
+            // 7. Section header first
             scramblePlain(lblCur,'Currently',24,()=>{
+              // 8. Content under section
               asgnEl.style.opacity='1';
               const tn=asgnEl.childNodes[0];
               let i=-8; const s=20+(Math.random()*6|0);
@@ -420,10 +433,10 @@ setTimeout(()=>{
                 if(i>asgnText.length){tn.textContent=asgnText;clearInterval(iv);}
               },s);
             });
-          },60);
+          },120);
         });
       });
-    },80);
+    },140);
   });
 },50+(Math.random()*70|0));
 
