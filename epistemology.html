@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Epistemology — Jacob Quisumbing</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+<meta name="theme-color" content="#090909">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #090909;
+  --text:     #c4bfa6;
+  --dim:      #464434;
+  --ghost:    #201f16;
+  --accent:   #4a7a4e;
+  --hi:       #d2ccb4;
+  --mid:      #7a7560;
+  --warm:     #c47a3a;
+  --red:      rgba(184,48,48,0.72);
+  --grn:      rgba(48,162,78,0.52);
+  --border:   rgba(74,122,78,0.11);
+  --mono:     'DM Mono', monospace;
+  --cond:     'Barlow Condensed', sans-serif;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:16px; scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:var(--mono); line-height:1.7; min-height:100vh; overflow-x:hidden; cursor:none; }
+
+/* ── ASCII BG ── */
+#ascii-bg {
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  font-family:'DM Mono','Courier New',monospace;
+  font-size:9px; line-height:13px;
+  color:rgba(74,122,78,0.1);
+  white-space:pre; overflow:hidden; user-select:none;
+  opacity:0; transition:opacity 2s ease 0.1s;
+}
+#ascii-bg.loaded { opacity:1; }
+
+#scanlines { position:fixed; inset:0; z-index:1; pointer-events:none; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.055) 3px,rgba(0,0,0,0.055) 4px); }
+
+/* ── CURSOR ── */
+#cur { position:fixed; z-index:9999; pointer-events:none; width:4px; height:4px; border-radius:50%; background:var(--accent); transform:translate(-50%,-50%); transition:width .13s,height .13s; mix-blend-mode:screen; }
+#cur.on { width:22px; height:22px; background:rgba(74,122,78,0.13); border:.5px solid var(--accent); }
+
+/* ── LAYOUT ── */
+#wrap { position:relative; z-index:2; max-width:600px; margin:0 auto; padding:80px 28px 100px; }
+
+/* ── HEADER ── */
+header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:88px; }
+
+/* ── NAME — Barlow 800, identity anchor ── */
+#name {
+  font-family:var(--cond); font-size:32px; font-weight:800;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--hi); margin-bottom:12px;
+  cursor:default; opacity:0; text-decoration:none; display:block;
+  transition:color .2s;
+}
+#name:hover { color:var(--text); }
+
+/* ── META — DM Mono utility ── */
+.meta { font-size:11px; letter-spacing:.06em; color:var(--dim); line-height:2.1; opacity:0; transition:opacity .3s ease; }
+
+/* ── NAV — DM Mono utility ── */
+nav { opacity:0; transition:opacity .3s ease; padding-top:4px; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+nav a { font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--dim); text-decoration:none; position:relative; transition:color .2s; white-space:nowrap; }
+nav a::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:.5px; background:var(--accent); transition:width .22s; }
+nav a:hover { color:var(--text); }
+nav a:hover::after { width:100%; }
+
+/* ── BLOCKS ── */
+.block { margin-bottom:72px; }
+
+/* ── DICTIONARY BLOCK ── */
+/* Word — Barlow 800, the signal */
+.dict-word {
+  font-family:var(--cond); font-size:clamp(36px, 7vw, 64px); font-weight:800;
+  letter-spacing:.06em; color:var(--hi); line-height:1;
+  margin-bottom:14px; opacity:0;
+}
+/* Definition — DM Mono italic, document substrate */
+.dict-def {
+  font-size:12px; letter-spacing:.04em; font-style:italic;
+  color:var(--dim); opacity:0;
+}
+
+/* ── UPCOMING ITEMS — movie poster treatment ── */
+/* Titles dimmed — announced, not live */
+.upcoming-list { list-style:none; margin-bottom:48px; }
+.upcoming-item {
+  padding:16px 0;
+  border-bottom:.5px solid var(--ghost);
+  opacity:0;
+}
+.upcoming-item:last-child { border-bottom:none; }
+
+.upcoming-title {
+  font-family:var(--cond); font-size:26px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--text); display:block; margin-bottom:4px;
+}
+.upcoming-sub {
+  font-size:13px; font-style:italic; color:var(--mid);
+  display:block; line-height:1.6; letter-spacing:.02em;
+}
+
+/* ── COMING SOON ── */
+.coming-soon {
+  font-family:var(--mono); font-size:11px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--accent);
+  opacity:0;
+}
+
+/* ── SECTION HEADER ROW — label + coming soon on one line ── */
+.label-row { display:flex; align-items:baseline; gap:16px; margin-bottom:20px; }
+
+/* ── SECTION HEADER — DM Mono, document substrate ── */
+.blabel {
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  letter-spacing:.32em; text-transform:uppercase;
+  color:var(--accent); opacity:0; min-height:1em;
+}
+
+/* ── ARTICLE ITEMS — same pattern as Building ── */
+.article-item { margin-bottom:28px; }
+.article-item:last-child { margin-bottom:20px; }
+
+.article-link {
+  font-family:var(--cond); font-size:26px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--hi); text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  position:relative; transition:color .2s;
+}
+.article-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:.5px; background:var(--accent); transition:width .25s; }
+.article-link:hover { color:var(--text); }
+.article-link:hover::after { width:100%; }
+.article-text { opacity:0; }
+.article-arrow { font-size:13px; font-family:var(--mono); font-weight:400; color:var(--accent); opacity:0; transition:transform .2s,color .2s; }
+.article-link:hover .article-arrow { transform:translate(2px,-2px); color:var(--text); }
+.article-sub { font-size:13px; font-style:italic; color:var(--dim); margin-top:6px; opacity:0; min-height:1em; }
+
+/* ── SUBSTACK CTA ── */
+.stack-link {
+  font-family:var(--cond); font-size:26px; font-weight:800;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--hi); text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  position:relative; transition:color .2s; opacity:0;
+}
+.stack-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:.5px; background:var(--accent); transition:width .25s; }
+.stack-link:hover { color:var(--text); }
+.stack-link:hover::after { width:100%; }
+.stack-arrow { font-size:13px; font-family:var(--mono); font-weight:400; color:var(--accent); transition:transform .2s,color .2s; }
+.stack-link:hover .stack-arrow { transform:translate(2px,-2px); color:var(--text); }
+
+/* ── FOOTER ── */
+footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border); display:flex; justify-content:space-between; font-size:10px; letter-spacing:.1em; color:var(--ghost); opacity:0; transition:opacity .4s ease; }
+#sc { cursor:default; transition:color .2s; }
+#sc:hover { color:var(--dim); }
+
+::-webkit-scrollbar { width:2px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); }
+
+@media(max-width:500px) { header{flex-direction:column;gap:20px} #wrap{padding:56px 20px 80px} .dict-word{font-size:38px} }
+</style>
+</head>
+<body>
+
+<pre id="ascii-bg"></pre>
+<div id="scanlines"></div>
+<div id="cur"></div>
+
+<div id="wrap">
+
+  <header>
+    <div style="flex:1">
+      <a href="index.html" id="name">Jacob Quisumbing</a>
+      <div class="meta" id="meta-el">
+        37.8716° N &nbsp;122.2727° W &nbsp;// &nbsp;Berkeley, CA
+      </div>
+    </div>
+    <nav id="nav-el">
+      <a href="index.html">← Home</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- DICTIONARY BLOCK -->
+  <div class="block">
+    <div class="dict-word" id="dict-word">ep·i·ste·mol·o·gy</div>
+    <div class="dict-def" id="dict-def">noun — the theory of knowledge. &nbsp;// ifykyk</div>
+
+
+  </div>
+
+  <!-- WRITING -->
+  <div class="block">
+    <div class="label-row">
+      <span class="blabel" id="lbl-writing">Writing</span>
+      <span class="coming-soon" id="coming-soon">coming soon...</span>
+    </div>
+
+    <div class="upcoming-list">
+      <div class="upcoming-item" id="u1">
+        <span class="upcoming-title">Cyberutopianism 2.0</span>
+        <span class="upcoming-sub">expert systems déjà vu</span>
+      </div>
+      <div class="upcoming-item" id="u2">
+        <span class="upcoming-title">Jarvis, do my homework</span>
+        <span class="upcoming-sub">i made my best friend into an ai assistant and it was awful</span>
+      </div>
+      <div class="upcoming-item" id="u3">
+        <span class="upcoming-title">A*</span>
+        <span class="upcoming-sub">the vision board to end all vision boards.</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>2026</span>
+    <span id="sc">Jacob Quisumbing</span>
+  </footer>
+
+</div>
+
+<script>
+/* ══ ASCII TERRAIN ═══════════════════════════════════════ */
+function hash2(x,y){let h=((x*374761393)^(y*668265263))|0;h=(h^(h>>>13))*1274126177|0;return((h^(h>>>16))>>>0)/4294967296;}
+function smooth(x,y){const ix=x|0,iy=y|0,fx=x-ix,fy=y-iy,ux=fx*fx*(3-2*fx),uy=fy*fy*(3-2*fy);return hash2(ix,iy)*(1-ux)*(1-uy)+hash2(ix+1,iy)*ux*(1-uy)+hash2(ix,iy+1)*(1-ux)*uy+hash2(ix+1,iy+1)*ux*uy;}
+function fbm(x,y){let v=0,a=1,s=0;for(let i=0;i<5;i++){v+=smooth(x,y)*a;s+=a;a*=.5;x*=2.1;y*=2.1;}return v/s;}
+function topoChar(e){const iv=0.095,mod=e%iv,th=0.013;if(mod<th||mod>iv-th){if(e<0.22)return'·';if(e<0.38)return'-';if(e<0.54)return'=';if(e<0.70)return'+';return'*';}if(e>0.82&&Math.random()<0.004)return'^';if(e>0.90&&Math.random()<0.002)return'#';return' ';}
+
+const bg=document.getElementById('ascii-bg');
+const CW=5.45,CH=13;
+let ox=0,oy=0,pmx=0,pmy=0;
+const LOAD_START=performance.now(),LOAD_DUR=2600;
+const NOISE='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*░▒▓▄▀';
+
+function renderTerrain(){
+  const cols=Math.ceil(window.innerWidth/CW)+2;
+  const rows=Math.ceil(window.innerHeight/CH)+2;
+  const elapsed=performance.now()-LOAD_START;
+  const loading=elapsed<LOAD_DUR;
+  const progress=Math.min(1,elapsed/LOAD_DUR);
+  let out='';
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const x=(c*0.038)+ox+pmx,y=(r*0.055)+oy+pmy;
+      if(loading){
+        const sv=(Math.sin(c*0.28)*Math.cos(r*0.35)+1)*0.5;
+        if(Math.random()>progress*0.75+sv*progress*0.45){out+=NOISE[Math.floor(Math.random()*NOISE.length)];continue;}
+      }
+      out+=topoChar(fbm(x,y));
+    }
+    out+='\n';
+  }
+  bg.textContent=out;
+  if(!loading){ox+=0.004;oy+=0.001;}
+}
+renderTerrain();
+requestAnimationFrame(()=>bg.classList.add('loaded'));
+let tt=setInterval(renderTerrain,85);
+setTimeout(()=>{clearInterval(tt);setInterval(renderTerrain,320);},LOAD_DUR+400);
+document.addEventListener('mousemove',e=>{pmx=(e.clientX/window.innerWidth-.5)*0.38;pmy=(e.clientY/window.innerHeight-.5)*0.22;});
+
+/* ══ SCRAMBLE ENGINE ═════════════════════════════════════ */
+const POOLS=['ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789','ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#%0123456789','ABCDEFGHIJKLMNOPQRSTUVWXYZ0101001101001011','ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789▓▒░'];
+const CHARS=POOLS[Math.floor(Math.random()*POOLS.length)];
+function rc(){return CHARS[Math.floor(Math.random()*CHARS.length)];}
+const SAFE=" ·*&/-:.,@+—°'\".!?←#";
+
+function scramblePlain(el,final,spd,cb){
+  el.style.opacity='1';
+  const s=Math.max(12,spd+(Math.random()*8|0)-4);
+  let i=-8;
+  const iv=setInterval(()=>{
+    el.textContent=final.split('').map((c,idx)=>{
+      if(SAFE.includes(c))return c;
+      return idx<Math.max(0,i)?final[idx]:rc();
+    }).join('');
+    i+=1.2;
+    if(i>final.length){
+      el.textContent=final;
+      clearInterval(iv);
+      if(cb)setTimeout(cb,20+(Math.random()*25|0));
+    }
+  },s);
+}
+
+function hoverScramble(el,final){
+  el.addEventListener('mouseenter',()=>{
+    let i=0;
+    const iv=setInterval(()=>{
+      el.textContent=final.split('').map((c,idx)=>{if(SAFE.includes(c))return c;return idx<i?final[idx]:rc();}).join('');
+      i+=2;if(i>final.length){el.textContent=final;clearInterval(iv);}
+    },26);
+  });
+}
+
+/* ══ LOAD SEQUENCE — strict top-down ═════════════════════ */
+setTimeout(()=>{
+  // 1. Identity anchor
+  scramblePlain(document.getElementById('name'),'Jacob Quisumbing',28,()=>{
+    // 2. Header chrome — meta and nav together
+    document.getElementById('meta-el').style.opacity='1';
+    document.getElementById('nav-el').style.opacity='1';
+    // 3. Pause — header settles
+    setTimeout(()=>{
+      // 4. Dictionary word — the signal
+      scramblePlain(document.getElementById('dict-word'),'ep·i·ste·mol·o·gy',22,()=>{
+        // 5. Definition line — the punchline
+        scramblePlain(document.getElementById('dict-def'),'noun — the theory of knowledge.  // ifykyk',20,()=>{
+          // 6. Pause before writing section
+          setTimeout(()=>{
+            // 7. Section label
+            scramblePlain(document.getElementById('lbl-writing'),'Writing',24,()=>{
+              // 8. Coming soon — fires before items
+              scramblePlain(document.getElementById('coming-soon'),'coming soon...',22,()=>{
+                // 9. Upcoming items — staggered reveals
+                ['u1','u2','u3'].forEach((id,i)=>{
+                  setTimeout(()=>{
+                    document.getElementById(id).style.opacity='1';
+                  },i*160);
+                });
+                // 10. Footer after items
+                setTimeout(()=>{ document.querySelector('footer').style.opacity='1'; },3*160+200);
+              });
+            });
+          },100);
+        });
+      });
+    },140);
+  });
+},50+(Math.random()*70|0));
+
+hoverScramble(document.getElementById('name'),'Jacob Quisumbing');
+hoverScramble(document.getElementById('sc'),'Jacob Quisumbing');
+
+/* ══ CURSOR ══════════════════════════════════════════════ */
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';});
+document.querySelectorAll('a,#name').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('on'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('on'));
+});
+</script>
+</body>
+</html>
