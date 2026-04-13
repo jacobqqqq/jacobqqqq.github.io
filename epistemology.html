@@ -51,20 +51,17 @@ body { background:var(--bg); color:var(--text); font-family:var(--mono); line-he
 #wrap { position:relative; z-index:2; max-width:600px; margin:0 auto; padding:80px 28px 100px; }
 
 /* ── HEADER ── */
-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:88px; }
+header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:64px; }
 
-/* ── NAME — Barlow 800, identity anchor ── */
+/* ── NAME ── */
 #name {
   font-family:var(--cond); font-size:32px; font-weight:800;
   letter-spacing:.14em; text-transform:uppercase;
-  color:var(--hi); margin-bottom:12px;
+  color:var(--hi); margin-bottom:8px;
   cursor:default; opacity:0; text-decoration:none; display:block;
   transition:color .2s;
 }
 #name:hover { color:var(--text); }
-
-/* ── META — DM Mono utility ── */
-.meta { font-size:11px; letter-spacing:.06em; color:var(--dim); line-height:2.1; opacity:0; transition:opacity .3s ease; }
 
 /* ── NAV — DM Mono utility ── */
 nav { opacity:0; transition:opacity .3s ease; padding-top:4px; display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
@@ -76,37 +73,38 @@ nav a:hover::after { width:100%; }
 /* ── BLOCKS ── */
 .block { margin-bottom:72px; }
 
-/* ── DICTIONARY BLOCK ── */
-/* Word — Barlow 800, the signal */
-.dict-word {
-  font-family:var(--cond); font-size:clamp(36px, 7vw, 64px); font-weight:800;
-  letter-spacing:.06em; color:var(--hi); line-height:1;
-  margin-bottom:14px; opacity:0;
+/* ── DICTIONARY LINES — tight to the header word ── */
+.dict-pron {
+  font-size:13px; font-style:italic; letter-spacing:.04em;
+  color:var(--mid); margin-bottom:6px; opacity:0;
 }
-/* Definition — DM Mono italic, document substrate */
 .dict-def {
-  font-size:12px; letter-spacing:.04em; font-style:italic;
-  color:var(--dim); opacity:0;
+  font-size:15px; color:var(--text);
+  line-height:1.7; opacity:0;
 }
 
 /* ── UPCOMING ITEMS — movie poster treatment ── */
-/* Titles dimmed — announced, not live */
-.upcoming-list { list-style:none; margin-bottom:48px; }
+.upcoming-list { list-style:none; }
 .upcoming-item {
   padding:16px 0;
-  border-bottom:.5px solid var(--ghost);
-  opacity:0;
+  cursor:default;
 }
-.upcoming-item:last-child { border-bottom:none; }
+
+.item-rule {
+  height:.5px; background:var(--ghost);
+  opacity:0; transition:opacity .3s ease;
+}
 
 .upcoming-title {
   font-family:var(--cond); font-size:26px; font-weight:800;
   letter-spacing:.12em; text-transform:uppercase;
-  color:var(--text); display:block; margin-bottom:4px;
+  color:var(--mid); display:block; margin-bottom:4px;
+  opacity:0; min-height:1em;
 }
 .upcoming-sub {
   font-size:13px; font-style:italic; color:var(--mid);
   display:block; line-height:1.6; letter-spacing:.02em;
+  opacity:0; min-height:1em;
 }
 
 /* ── COMING SOON ── */
@@ -116,7 +114,7 @@ nav a:hover::after { width:100%; }
   opacity:0;
 }
 
-/* ── SECTION HEADER ROW — label + coming soon on one line ── */
+/* ── SECTION HEADER ROW ── */
 .label-row { display:flex; align-items:baseline; gap:16px; margin-bottom:20px; }
 
 /* ── SECTION HEADER — DM Mono, document substrate ── */
@@ -125,39 +123,6 @@ nav a:hover::after { width:100%; }
   letter-spacing:.32em; text-transform:uppercase;
   color:var(--accent); opacity:0; min-height:1em;
 }
-
-/* ── ARTICLE ITEMS — same pattern as Building ── */
-.article-item { margin-bottom:28px; }
-.article-item:last-child { margin-bottom:20px; }
-
-.article-link {
-  font-family:var(--cond); font-size:26px; font-weight:800;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:var(--hi); text-decoration:none;
-  display:inline-flex; align-items:center; gap:8px;
-  position:relative; transition:color .2s;
-}
-.article-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:.5px; background:var(--accent); transition:width .25s; }
-.article-link:hover { color:var(--text); }
-.article-link:hover::after { width:100%; }
-.article-text { opacity:0; }
-.article-arrow { font-size:13px; font-family:var(--mono); font-weight:400; color:var(--accent); opacity:0; transition:transform .2s,color .2s; }
-.article-link:hover .article-arrow { transform:translate(2px,-2px); color:var(--text); }
-.article-sub { font-size:13px; font-style:italic; color:var(--dim); margin-top:6px; opacity:0; min-height:1em; }
-
-/* ── SUBSTACK CTA ── */
-.stack-link {
-  font-family:var(--cond); font-size:26px; font-weight:800;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:var(--hi); text-decoration:none;
-  display:inline-flex; align-items:center; gap:8px;
-  position:relative; transition:color .2s; opacity:0;
-}
-.stack-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:.5px; background:var(--accent); transition:width .25s; }
-.stack-link:hover { color:var(--text); }
-.stack-link:hover::after { width:100%; }
-.stack-arrow { font-size:13px; font-family:var(--mono); font-weight:400; color:var(--accent); transition:transform .2s,color .2s; }
-.stack-link:hover .stack-arrow { transform:translate(2px,-2px); color:var(--text); }
 
 /* ── FOOTER ── */
 footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border); display:flex; justify-content:space-between; font-size:10px; letter-spacing:.1em; color:var(--ghost); opacity:0; transition:opacity .4s ease; }
@@ -181,10 +146,9 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
 
   <header>
     <div style="flex:1">
-      <a href="index.html" id="name">Jacob Quisumbing</a>
-      <div class="meta" id="meta-el">
-        37.8716° N &nbsp;122.2727° W &nbsp;// &nbsp;Berkeley, CA
-      </div>
+      <a href="index.html" id="name">Epistemology</a>
+      <div class="dict-pron" id="dict-pron">/əˌpistəˈmäləjē/</div>
+      <div class="dict-def" id="dict-def">noun — the theory of knowledge. &nbsp;// ifykyk</div>
     </div>
     <nav id="nav-el">
       <a href="index.html">← Home</a>
@@ -192,33 +156,26 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
     </nav>
   </header>
 
-  <!-- DICTIONARY BLOCK -->
-  <div class="block">
-    <div class="dict-word" id="dict-word">ep·i·ste·mol·o·gy</div>
-    <div class="dict-def" id="dict-def">noun — the theory of knowledge. &nbsp;// ifykyk</div>
-
-
-  </div>
-
   <!-- WRITING -->
   <div class="block">
     <div class="label-row">
-      <span class="blabel" id="lbl-writing">Writing</span>
-      <span class="coming-soon" id="coming-soon">coming soon...</span>
+      <span class="blabel" id="lbl-writing">Writing coming soon...</span>
     </div>
 
     <div class="upcoming-list">
       <div class="upcoming-item" id="u1">
-        <span class="upcoming-title">Cyberutopianism 2.0</span>
-        <span class="upcoming-sub">expert systems déjà vu</span>
+        <span class="upcoming-title" id="u1-title">Cyberutopianism 2.0</span>
+        <span class="upcoming-sub" id="u1-sub">expert systems déjà vu.</span>
       </div>
+      <div class="item-rule" id="u1-rule"></div>
       <div class="upcoming-item" id="u2">
-        <span class="upcoming-title">Jarvis, do my homework</span>
-        <span class="upcoming-sub">i made my best friend into an ai assistant and it was awful</span>
+        <span class="upcoming-title" id="u2-title">Jarvis, do my homework</span>
+        <span class="upcoming-sub" id="u2-sub">i made my best friend into an ai assistant and it was awful.</span>
       </div>
+      <div class="item-rule" id="u2-rule"></div>
       <div class="upcoming-item" id="u3">
-        <span class="upcoming-title">A*</span>
-        <span class="upcoming-sub">the vision board to end all vision boards.</span>
+        <span class="upcoming-title" id="u3-title">A*</span>
+        <span class="upcoming-sub" id="u3-sub">the vision board to end all vision boards.</span>
       </div>
     </div>
   </div>
@@ -306,41 +263,49 @@ function hoverScramble(el,final){
 
 /* ══ LOAD SEQUENCE — strict top-down ═════════════════════ */
 setTimeout(()=>{
-  // 1. Identity anchor
-  scramblePlain(document.getElementById('name'),'Jacob Quisumbing',28,()=>{
-    // 2. Header chrome — meta and nav together
-    document.getElementById('meta-el').style.opacity='1';
+  // 1. Header word
+  scramblePlain(document.getElementById('name'),'Epistemology',26,()=>{
+    // 2. Nav
     document.getElementById('nav-el').style.opacity='1';
-    // 3. Pause — header settles
+    // 3. Pause
     setTimeout(()=>{
-      // 4. Dictionary word — the signal
-      scramblePlain(document.getElementById('dict-word'),'ep·i·ste·mol·o·gy',22,()=>{
-        // 5. Definition line — the punchline
-        scramblePlain(document.getElementById('dict-def'),'noun — the theory of knowledge.  // ifykyk',20,()=>{
-          // 6. Pause before writing section
+      // 4. Pronunciation
+      scramblePlain(document.getElementById('dict-pron'),'/əˌpistəˈmäləjē/',20,()=>{
+        // 5. Definition + ifykyk
+        scramblePlain(document.getElementById('dict-def'),'noun — the theory of knowledge.  // ifykyk',18,()=>{
+          // 6. Pause before writing
           setTimeout(()=>{
-            // 7. Section label
-            scramblePlain(document.getElementById('lbl-writing'),'Writing',24,()=>{
-              // 8. Coming soon — fires before items
-              scramblePlain(document.getElementById('coming-soon'),'coming soon...',22,()=>{
-                // 9. Upcoming items — staggered reveals
-                ['u1','u2','u3'].forEach((id,i)=>{
-                  setTimeout(()=>{
-                    document.getElementById(id).style.opacity='1';
-                  },i*160);
+            // 7. Writing label
+            scramblePlain(document.getElementById('lbl-writing'),'Writing coming soon...',24,()=>{
+              // 8. Items — show container, title scrambles, sub scrambles, rule fades in
+              function scrambleItem(n, cb){
+                const item  = document.getElementById('u'+n);
+                const title = document.getElementById('u'+n+'-title');
+                const sub   = document.getElementById('u'+n+'-sub');
+                const rule  = document.getElementById('u'+n+'-rule');
+                const tt = title.textContent.trim();
+                const st = sub.textContent.trim();
+                item.style.opacity='1';
+                title.textContent=''; sub.textContent='';
+                scramblePlain(title, tt, 22, ()=>{
+                  scramblePlain(sub, st, 20, ()=>{
+                    if(rule) rule.style.opacity='1';
+                    if(cb) setTimeout(cb, 80);
+                  });
                 });
-                // 10. Footer after items
-                setTimeout(()=>{ document.querySelector('footer').style.opacity='1'; },3*160+200);
-              });
+              }
+              scrambleItem(1, ()=>scrambleItem(2, ()=>scrambleItem(3, ()=>{
+                setTimeout(()=>{ document.querySelector('footer').style.opacity='1'; },200);
+              })));
             });
-          },100);
+          },120);
         });
       });
     },140);
   });
 },50+(Math.random()*70|0));
 
-hoverScramble(document.getElementById('name'),'Jacob Quisumbing');
+hoverScramble(document.getElementById('name'),'Epistemology');
 hoverScramble(document.getElementById('sc'),'Jacob Quisumbing');
 
 /* ══ CURSOR ══════════════════════════════════════════════ */
