@@ -165,7 +165,7 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
     <div class="upcoming-list">
       <div class="upcoming-item" id="u1">
         <span class="upcoming-title" id="u1-title">Cyberutopianism 2.0</span>
-        <span class="upcoming-sub" id="u1-sub">expert systems déjà vu.</span>
+        <span class="upcoming-sub" id="u1-sub">personal computing déjà vu.</span>
       </div>
       <div class="item-rule" id="u1-rule"></div>
       <div class="upcoming-item" id="u2">
@@ -176,6 +176,11 @@ footer { margin-top:72px; padding-top:16px; border-top:.5px solid var(--border);
       <div class="upcoming-item" id="u3">
         <span class="upcoming-title" id="u3-title">A*</span>
         <span class="upcoming-sub" id="u3-sub">the vision board to end all vision boards.</span>
+      </div>
+      <div class="item-rule" id="u3-rule"></div>
+      <div class="upcoming-item" id="u4">
+        <span class="upcoming-title" id="u4-title">Claude, make me a billion dollars. Make no mistakes.</span>
+        <span class="upcoming-sub" id="u4-sub">become the 100x engineer you always wanted to be.</span>
       </div>
     </div>
   </div>
@@ -235,18 +240,18 @@ const SAFE=" ·*&/-:.,@+—°'\".!?←#";
 
 function scramblePlain(el,final,spd,cb){
   el.style.opacity='1';
-  const s=Math.max(12,spd+(Math.random()*8|0)-4);
-  let i=-8;
+  const s=Math.max(10,spd+(Math.random()*6|0)-3);
+  let i=-4;
   const iv=setInterval(()=>{
     el.textContent=final.split('').map((c,idx)=>{
       if(SAFE.includes(c))return c;
       return idx<Math.max(0,i)?final[idx]:rc();
     }).join('');
-    i+=1.2;
+    i+=2.2;
     if(i>final.length){
       el.textContent=final;
       clearInterval(iv);
-      if(cb)setTimeout(cb,20+(Math.random()*25|0));
+      if(cb)setTimeout(cb,10+(Math.random()*15|0));
     }
   },s);
 }
@@ -270,13 +275,13 @@ setTimeout(()=>{
     // 3. Pause
     setTimeout(()=>{
       // 4. Pronunciation
-      scramblePlain(document.getElementById('dict-pron'),'/əˌpistəˈmäləjē/',20,()=>{
+      scramblePlain(document.getElementById('dict-pron'),'/əˌpistəˈmäləjē/',18,()=>{
         // 5. Definition + ifykyk
-        scramblePlain(document.getElementById('dict-def'),'noun — the theory of knowledge.  // ifykyk',18,()=>{
+        scramblePlain(document.getElementById('dict-def'),'noun — the theory of knowledge.  // ifykyk',16,()=>{
           // 6. Pause before writing
           setTimeout(()=>{
             // 7. Writing label
-            scramblePlain(document.getElementById('lbl-writing'),'Writing coming soon...',24,()=>{
+            scramblePlain(document.getElementById('lbl-writing'),'Writing coming soon...',20,()=>{
               // 8. Items — show container, title scrambles, sub scrambles, rule fades in
               function scrambleItem(n, cb){
                 const item  = document.getElementById('u'+n);
@@ -287,21 +292,21 @@ setTimeout(()=>{
                 const st = sub.textContent.trim();
                 item.style.opacity='1';
                 title.textContent=''; sub.textContent='';
-                scramblePlain(title, tt, 22, ()=>{
-                  scramblePlain(sub, st, 20, ()=>{
+                scramblePlain(title, tt, 18, ()=>{
+                  scramblePlain(sub, st, 16, ()=>{
                     if(rule) rule.style.opacity='1';
-                    if(cb) setTimeout(cb, 80);
+                    if(cb) setTimeout(cb, 50);
                   });
                 });
               }
-              scrambleItem(1, ()=>scrambleItem(2, ()=>scrambleItem(3, ()=>{
+              scrambleItem(1, ()=>scrambleItem(2, ()=>scrambleItem(3, ()=>scrambleItem(4, ()=>{
                 setTimeout(()=>{ document.querySelector('footer').style.opacity='1'; },200);
-              })));
+              }))));
             });
-          },120);
+          },80);
         });
       });
-    },140);
+    },100);
   });
 },50+(Math.random()*70|0));
 
